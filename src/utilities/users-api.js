@@ -1,4 +1,4 @@
-import { getToken } from "../utilities/users-service";
+import { getToken } from "./users-service";
 
 // This is the base path of the Express route we'll define
 // called namespacing
