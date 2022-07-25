@@ -6,7 +6,7 @@ const usersCtrl = require("../../controllers/api/users");
 // POST /api/users
 router.post("/", usersCtrl.createUser);
 
-// router.post("/login", usersCtrl.login);
+router.post("/login", usersCtrl.authUser);
 
 // router.get("/check-token", ensureLoggedIn, usersCtrl.checkToken);
 
