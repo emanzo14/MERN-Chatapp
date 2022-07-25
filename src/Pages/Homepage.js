@@ -18,7 +18,7 @@ const Homepage = () => {
           borderRadius="lg"
           borderWidth="1px"
         >
-          <Text fontSize="4xl">Chatty-Kathy</Text>
+          <Text fontSize="4xl">MERN Chat</Text>
         </Box>
         <Box bg={"#81E6D9"} p={4} w="100%" borderRadius="lg" borderWidth="1px">
           <Tabs variant="soft-rounded" colorScheme="green">

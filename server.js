@@ -1,30 +1,25 @@
 const express = require("express");
 const path = require("path");
-const app = express();
+const favicon = require("serve-favicon");
+const userRoutes = require("./routes/api/users");
 
 require("dotenv").config();
 // Connect to the database
 require("./config/database");
+const app = express();
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "build")));
+app.use(favicon(path.join(__dirname, "build", "favicon.ico")));
 
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "build", index.html));
 });
 
-// app.get('/chat', (req, res) => {
-//     res.send(chats);
-// })
+app.use("/api/users", userRoutes);
 
-// app.get('/chat/:id', (req, res) => {
-//     // console.log(req.params.id)
-//     const singleChat = chats.find((c) => c._id === req.params.id)
-//     res.send(singleChat)
-// })
-
-const port = process.env.PORT || 3001;
+const port = 3000;
 
 app.listen(port, function () {
-  console.log(`Express app running on port ${port}`);
+  console.log(`Server.js is running on port ${port}`);
 });
