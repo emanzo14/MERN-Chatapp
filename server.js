@@ -18,7 +18,7 @@ app.get("/*", (req, res) => {
 
 app.use("/api/users", userRoutes);
 
-const port = 3000;
+const port = 3001;
 
 app.listen(port, function () {
   console.log(`Server.js is running on port ${port}`);
