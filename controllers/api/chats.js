@@ -45,4 +45,11 @@ const createChat = asyncHandler(async (req, res, next) => {
   }
 });
 
-module.exports = { createChat };
+const fetchChats = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+  const chats = await Chat.find({
+    users: { $all: [user.id] },
+  }).then((result) => res.send(result));
+});
+
+module.exports = { createChat, fetchChats };
