@@ -1,45 +1,47 @@
 const asyncHandler = require("express-async-handler");
 const Chat = require("../../models/chat");
 const User = require("../../models/user");
-// import { searchUsers } from "./users";
 
-const createChat = asyncHandler(async (req, res) => {
+const createChat = asyncHandler(async (req, res, next) => {
   const { userId } = req.body;
-
-  if (!userId) {
+  const user = await User.findById(userId);
+  console.log(user.id);
+  if (!user) {
     res.status(400);
-    throw new Error("user id does not exist");
+    throw new Error("user does not exist");
   }
-
-  let isChat = await Chat.findOne({
+  const sessionUser = await User.findById(req.user.id);
+  console.log(sessionUser.id);
+  // if (sessionUser.chats.includes(userId)) {
+  //   res.status(400);
+  //   throw new Error("user already in chat");
+  // }
+  let chat = await Chat.findOne({
+    users: { $all: [user.id, sessionUser.id] },
     isGroupChat: false,
-    $and: [{ users: { $in: [userId] } }, { users: { $in: [req.user._id] } }],
-  }).populate("latestMessage");
+  })
+    .populate("users", "-password")
+    .populate("latestMessage");
 
-  isChat = await User.populate(isChat, {
+  chat = await User.populate(chat, {
     path: "latestMessage.sender",
     select: "name pic email",
   });
-
-  if (isChat.length > 0) {
-    res.send(isChat[0]);
-  } else {
-    let chatData = {
-      chatName: "sender",
+  let isChat = await Chat.findOne({
+    users: { $all: [user.id, sessionUser.id] },
+    isGroupChat: false,
+  });
+  if (!isChat) {
+    const newChat = await Chat.create({
+      chatName: `${sessionUser.name} & ${user.name}`,
+      users: [user.id, sessionUser.id],
       isGroupChat: false,
-      users: [req.user._id, userId],
-    };
-    try {
-      const createdChat = await Chat.create(chatData);
-      const chat = await Chat.findOne({ _id: createdChat._id }).populate(
-        "users",
-        "-password"
-      );
-      res.send(chat);
-    } catch (err) {
-      res.status(400);
-      throw new Error(err);
-    }
+    });
+    console.log(newChat);
+    res.send(newChat);
+  } else {
+    res.send(isChat);
+    console.log("chat already exists");
   }
 });
 
