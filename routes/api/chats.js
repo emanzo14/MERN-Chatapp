@@ -5,6 +5,6 @@ const auth = require("../../middleware/authMiddleware");
 
 router.post("/", auth.protect, chatsCtrl.createChat);
 router.get("/", auth.protect, chatsCtrl.fetchChats);
-router.post("/:id", auth.protect, chatsCtrl.createGroupChat);
-
+router.post("/group", auth.protect, chatsCtrl.createGroupChat);
+router.put("/rename", auth.protect, chatsCtrl.renameGroupChat);
 module.exports = router;
