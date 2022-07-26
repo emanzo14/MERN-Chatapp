@@ -5,6 +5,11 @@ const generateToken = require("../../config/generateToken");
 // const jwt = require("jsonwebtoken");
 // const bcrypt = require("bcrypt");
 
+function checkToken(req, res) {
+  console.log("req.user", req.user);
+  res.json(req.exp);
+}
+
 const createUser = asyncHandler(async (req, res) => {
   const { name, email, password, pic } = req.body;
 
@@ -58,4 +63,19 @@ const authUser = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { createUser, authUser };
+const searchUsers = asyncHandler(async (req, res) => {
+  const keyword = req.query.search
+    ? {
+        $or: [
+          { name: { $regex: req.query.search, $options: "i" } },
+          { email: { $regex: req.query.search, $options: "i" } },
+        ],
+      }
+    : {};
+  //   console.log(keyword);
+  const users = await await User.find(keyword);
+  //   .findIndex({ _id: { $ne: req.user._id } });
+  res.send(users);
+});
+
+module.exports = { createUser, authUser, searchUsers, checkToken };
