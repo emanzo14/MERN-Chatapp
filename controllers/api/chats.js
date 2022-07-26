@@ -1,3 +1,4 @@
+const e = require("express");
 const asyncHandler = require("express-async-handler");
 const Chat = require("../../models/chat");
 const User = require("../../models/user");
@@ -104,4 +105,28 @@ const renameGroupChat = asyncHandler(async (req, res, next) => {
   }
 });
 
-module.exports = { createChat, fetchChats, createGroupChat, renameGroupChat };
+const addUserToGroupChat = asyncHandler(async (req, res, next) => {
+  const { chatId, userId } = req.body;
+  const add = await Chat.findByIdAndUpdate(
+    chatId,
+    { $push: { users: userId } },
+    { new: true }
+  )
+    .populate("users", "-password")
+    .populate("groupAdmin", "-password");
+
+  if (!add) {
+    res.status(404);
+    throw new Error("Chat Not Found");
+  } else {
+    res.json(add);
+  }
+});
+
+module.exports = {
+  createChat,
+  fetchChats,
+  createGroupChat,
+  renameGroupChat,
+  addUserToGroupChat,
+};

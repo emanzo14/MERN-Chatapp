@@ -7,4 +7,5 @@ router.post("/", auth.protect, chatsCtrl.createChat);
 router.get("/", auth.protect, chatsCtrl.fetchChats);
 router.post("/group", auth.protect, chatsCtrl.createGroupChat);
 router.put("/rename", auth.protect, chatsCtrl.renameGroupChat);
+router.put("/add_user", auth.protect, chatsCtrl.addUserToGroupChat);
 module.exports = router;
