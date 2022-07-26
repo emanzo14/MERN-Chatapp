@@ -123,10 +123,30 @@ const addUserToGroupChat = asyncHandler(async (req, res, next) => {
   }
 });
 
+const removeUserFromGroupChat = asyncHandler(async (req, res, next) => {
+  const { chatId, userId } = req.body;
+  const remove = await Chat.findByIdAndUpdate(
+    chatId,
+    { $pull: { users: userId } },
+    { new: true }
+  )
+    .populate("users", "-password")
+
+    .populate("groupAdmin", "-password");
+
+  if (!remove) {
+    res.status(404);
+    throw new Error("Chat Not Found");
+  } else {
+    res.json(remove);
+  }
+});
+
 module.exports = {
   createChat,
   fetchChats,
   createGroupChat,
   renameGroupChat,
   addUserToGroupChat,
+  removeUserFromGroupChat,
 };
