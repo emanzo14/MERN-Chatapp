@@ -2,8 +2,8 @@ const User = require("../../models/user");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../../config/generateToken");
 
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+// const jwt = require("jsonwebtoken");
+// const bcrypt = require("bcrypt");
 
 function checkToken(req, res) {
   console.log("req.user", req.user);
@@ -33,7 +33,7 @@ const createUser = asyncHandler(async (req, res) => {
   });
 
   if (user) {
-    res.status(201).json({
+    res.send(user).json({
       _id: user._id,
       name: user.name,
       email: user.email,
@@ -74,7 +74,7 @@ const searchUsers = asyncHandler(async (req, res) => {
       }
     : {};
   //   console.log(keyword);
-  const users = await await User.find(keyword).find({
+  const users = await User.find(keyword).find({
     _id: { $ne: req.user._id },
   });
   res.send(users);

@@ -3,24 +3,18 @@ const Chat = require("../../models/chat");
 const User = require("../../models/user");
 // import { searchUsers } from "./users";
 
-const accessChat = asyncHandler(async (req, res) => {
+const createChat = asyncHandler(async (req, res) => {
   const { userId } = req.body;
-  console.log(userId);
 
   if (!userId) {
-    console.log("userId is not avalible");
-    return res.sendStatus(400);
+    res.status(400);
+    throw new Error("user id does not exist");
   }
 
-  let isChat = await Chat.find({
+  let isChat = await Chat.findOne({
     isGroupChat: false,
-    $and: [
-      { users: { $elemMatch: { $eq: req.user._id } } },
-      { users: { $elemMatch: { $eq: userId } } },
-    ],
-  })
-    .populate("users", "-passord")
-    .populate("latestMessage");
+    $and: [{ users: { $in: [userId] } }, { users: { $in: [req.user._id] } }],
+  }).populate("latestMessage");
 
   isChat = await User.populate(isChat, {
     path: "latestMessage.sender",
@@ -33,22 +27,20 @@ const accessChat = asyncHandler(async (req, res) => {
     let chatData = {
       chatName: "sender",
       isGroupChat: false,
-      users: [req.user, _id, userId],
+      users: [req.user._id, userId],
     };
     try {
       const createdChat = await Chat.create(chatData);
-
-      const fullChat = await Chat.findOne({ _id: createdChat._id })
-        .populate("users", "-passord")
-        .populate("latestMessage");
-
-      res.status(200).send(fullChat);
-    } catch (error) {}
+      const chat = await Chat.findOne({ _id: createdChat._id }).populate(
+        "users",
+        "-password"
+      );
+      res.send(chat);
+    } catch (err) {
+      res.status(400);
+      throw new Error(err);
+    }
   }
 });
 
-// export function getUser() {
-//     const token =
-// }
-
-module.exports = { accessChat };
+module.exports = { createChat };
