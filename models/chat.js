@@ -1,15 +1,17 @@
-const mongoose = require('mongoose')
-const Schema = require('mmongoose').Schema
+const mongoose = require("mongoose");
+const Schema = require("mongoose").Schema;
 
-const chatSchema = new Schema({
-    chatName: {type: String, trim: true},
-    isGroupChat: {type: Boolean, default: false},
-    latestMessage: {type: mongoose.Schema.Types.ObjectId, ref: "Message"},
-    users: {type: Schema.Types.ObjectId, ref: "User"},
-    groupAdmin: {type: Schema.Types.ObjectId, ref: "User"}
+const chatSchema = new Schema(
+  {
+    chatName: { type: String, trim: true },
+    isGroupChat: { type: Boolean, default: false },
+    latestMessage: { type: mongoose.Schema.Types.ObjectId, ref: "Message" },
+    users: { type: Schema.Types.ObjectId, ref: "User" },
+    groupAdmin: { type: Schema.Types.ObjectId, ref: "User" },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-},{
-    timestamps: true
-})
-
-module.exports = mongoose.model('Chat', chatSchema)
+module.exports = mongoose.model("Chat", chatSchema);

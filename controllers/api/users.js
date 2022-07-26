@@ -2,8 +2,8 @@ const User = require("../../models/user");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../../config/generateToken");
 
-// const jwt = require("jsonwebtoken");
-// const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 function checkToken(req, res) {
   console.log("req.user", req.user);
@@ -57,6 +57,7 @@ const authUser = asyncHandler(async (req, res) => {
       pic: user.pic,
       token: generateToken(user._id),
     });
+    console.log(user._id);
   } else {
     res.status(401);
     throw new Error("Invalid Email or Password");
@@ -73,8 +74,9 @@ const searchUsers = asyncHandler(async (req, res) => {
       }
     : {};
   //   console.log(keyword);
-  const users = await await User.find(keyword);
-  //   .findIndex({ _id: { $ne: req.user._id } });
+  const users = await await User.find(keyword).find({
+    _id: { $ne: req.user._id },
+  });
   res.send(users);
 });
 
