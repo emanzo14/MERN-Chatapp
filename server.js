@@ -3,6 +3,7 @@ const path = require("path");
 const favicon = require("serve-favicon");
 const userRoutes = require("./routes/api/users");
 const chatRoutes = require("./routes/api/chats");
+const messageRoutes = require("./routes/api/messages");
 
 require("dotenv").config();
 // Connect to the database
@@ -22,6 +23,7 @@ app.use("/api/users", userRoutes);
 
 // const ensureLoggedIn = require("./config/ensureLoggedIn");
 app.use("/api/chats", chatRoutes);
+app.use("/api/messages", messageRoutes);
 
 const port = 3001;
 
