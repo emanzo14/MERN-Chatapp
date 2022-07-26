@@ -33,7 +33,7 @@ const createChat = asyncHandler(async (req, res, next) => {
   });
   if (!isChat) {
     const newChat = await Chat.create({
-      chatName: `${sessionUser.name} & ${user.name}`,
+      chatName: `${user.name} & ${sessionUser.name}`,
       users: [user.id, sessionUser.id],
       isGroupChat: false,
     });
