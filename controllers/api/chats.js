@@ -47,9 +47,19 @@ const createChat = asyncHandler(async (req, res, next) => {
 
 const fetchChats = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
-  const chats = await Chat.find({
-    users: { $all: [user.id] },
-  }).then((result) => res.send(result));
+  const chats = await Chat.find({ users: { $all: [user.id] } })
+    .populate("users", "-password")
+    .populate("groupAdmin", "-password")
+    .populate("latestMessage")
+    .sort({ updatedAt: -1 })
+
+    .then(async (results) => {
+      results = await User.populate(results, {
+        path: "latestMessage.sender",
+        select: "name pic email",
+      });
+      res.status(200).send(results);
+    });
 });
 
 module.exports = { createChat, fetchChats };
