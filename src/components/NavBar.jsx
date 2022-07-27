@@ -25,12 +25,14 @@ import { useDisclosure } from "@chakra-ui/react";
 import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import UserListItem from "./UserListItem";
 
 const NavBar = ({ user }) => {
   const [search, setSearch] = useState();
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState(false);
+  const [selectedChat, setSelectedChat] = useState();
 
   const toast = useToast();
   const navigate = useNavigate();
@@ -68,6 +70,36 @@ const NavBar = ({ user }) => {
       setLoading(false);
       console.log(data);
       setSearchResults(data);
+    } catch (error) {
+      toast({
+        title: "Something went wrong",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
+    }
+  };
+
+  const handleFunction = async () => {};
+
+  const accessChat = async (userId) => {
+    try {
+      setLoadingChat(true);
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+
+      const { data } = await axios.post(`/api/chat`, { userId }, config);
+
+      setLoadingChat(false);
+      console.log(data);
+
+      setSelectedChat(data);
     } catch (error) {
       toast({
         title: "Something went wrong",
@@ -134,6 +166,21 @@ const NavBar = ({ user }) => {
               />
               <Button onClick={searchHandler}>Go!</Button>
             </Box>
+            {loading ? (
+              <Box display="flex" justifyContent="center" alignItems="center">
+                <Text>Loading...</Text>
+              </Box>
+            ) : (
+              <Box>
+                {searchResults.map((user) => (
+                  <UserListItem
+                    user={user}
+                    key={user.id}
+                    handleFunction={() => accessChat(user.id)}
+                  />
+                ))}
+              </Box>
+            )}
           </DrawerBody>
 
           <DrawerFooter>
