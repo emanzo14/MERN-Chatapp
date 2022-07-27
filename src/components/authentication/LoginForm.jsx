@@ -65,7 +65,7 @@ const LoginForm = () => {
       navigate("/chats");
     } catch (error) {
       toast({
-        title: "Error Occured!",
+        title: "Username or password is incorrect",
         description: error.response.data.message,
         status: "error",
         duration: 5000,

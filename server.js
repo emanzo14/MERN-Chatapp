@@ -21,9 +21,9 @@ app.use(require("./config/checkToken"));
 
 app.use("/api/users", userRoutes);
 
-// const ensureLoggedIn = require("./config/ensureLoggedIn");
-app.use("/api/chats", chatRoutes);
-app.use("/api/messages", messageRoutes);
+const ensureLoggedIn = require("./config/ensureLoggedIn");
+app.use("/api/chats", ensureLoggedIn, chatRoutes);
+app.use("/api/messages", ensureLoggedIn, messageRoutes);
 
 const port = 3001;
 
