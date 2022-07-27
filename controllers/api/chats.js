@@ -5,9 +5,10 @@ const User = require("../../models/user");
 
 const createChat = asyncHandler(async (req, res, next) => {
   const { userId } = req.body;
-  const user = await User.findById(userId);
-  console.log(user.id);
-  if (!user) {
+  console.log(userId);
+  // const user = await User.findById(userId);
+  // console.log(user.id);
+  if (!userId) {
     res.status(400);
     throw new Error("user does not exist");
   }
@@ -18,7 +19,7 @@ const createChat = asyncHandler(async (req, res, next) => {
   //   throw new Error("user already in chat");
   // }
   let chat = await Chat.findOne({
-    users: { $all: [user.id, sessionUser.id] },
+    users: { $all: [userId, sessionUser.id] },
     isGroupChat: false,
   })
     .populate("users", "-password")
@@ -29,13 +30,13 @@ const createChat = asyncHandler(async (req, res, next) => {
     select: "name pic email",
   });
   let isChat = await Chat.findOne({
-    users: { $all: [user.id, sessionUser.id] },
+    users: { $all: [userId, sessionUser.id] },
     isGroupChat: false,
   });
   if (!isChat) {
     const newChat = await Chat.create({
-      chatName: `${user.name} & ${sessionUser.name}`,
-      users: [user.id, sessionUser.id],
+      chatName: `${userId.name} & ${sessionUser.name}`,
+      users: [userId, sessionUser.id],
       isGroupChat: false,
     });
     console.log(newChat);

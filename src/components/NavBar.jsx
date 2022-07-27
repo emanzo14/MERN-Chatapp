@@ -27,12 +27,13 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import UserListItem from "./UserListItem";
 
-const NavBar = ({ user }) => {
+const NavBar = ({ user, setSelectedChat }) => {
   const [search, setSearch] = useState();
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState(false);
-  const [selectedChat, setSelectedChat] = useState();
+  //   const [selectedChat, setSelectedChat] = useState();
+  const [chats, setChats] = useState([]);
 
   const toast = useToast();
   const navigate = useNavigate();
@@ -68,7 +69,7 @@ const NavBar = ({ user }) => {
       const { data } = await axios.get(`/api/users?search=${search}`, config);
 
       setLoading(false);
-      console.log(data);
+      //   console.log(data);
       setSearchResults(data);
     } catch (error) {
       toast({
@@ -84,22 +85,23 @@ const NavBar = ({ user }) => {
   const handleFunction = async () => {};
 
   const accessChat = async (userId) => {
+    console.log(userId);
     try {
       setLoadingChat(true);
 
       const config = {
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
         },
       };
 
-      const { data } = await axios.post(`/api/chat`, { userId }, config);
+      const { data } = await axios.post(`/api/chats`, { userId }, config);
 
-      setLoadingChat(false);
-      console.log(data);
+      if (!chats.find((c) => c.id === data.id)) setChats([...chats, data]);
 
       setSelectedChat(data);
+      setLoadingChat(false);
+      onClose();
     } catch (error) {
       toast({
         title: "Something went wrong",
@@ -122,7 +124,7 @@ const NavBar = ({ user }) => {
         borderWidth="5px"
       >
         <Button variant="ghost" bg="blue.200" onClick={onOpen}>
-          <i class="fa-solid fa-magnifying-glass"></i>
+          <i className="fa-solid fa-magnifying-glass"></i>
           <Text px="4">Search User</Text>
         </Button>
         <Text fontFamily="" fontSize="3xl">
@@ -175,8 +177,8 @@ const NavBar = ({ user }) => {
                 {searchResults.map((user) => (
                   <UserListItem
                     user={user}
-                    key={user.id}
-                    handleFunction={() => accessChat(user.id)}
+                    key={user._id}
+                    handleFunction={() => accessChat(user._id)}
                   />
                 ))}
               </Box>

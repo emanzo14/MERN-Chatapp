@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Button } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import Chatbox from "../components/Chatbox";
 import NavBar from "../components/NavBar";
