@@ -32,4 +32,12 @@ const sendMessage = asyncHandler(async (req, res, next) => {
   }
 });
 
-module.exports = { sendMessage };
+const fetchMessages = asyncHandler(async (req, res, next) => {
+  const { chatId } = req.params.chatId;
+  const messages = await Message.find({ chat: chatId })
+    .populate("sender", "name pic email")
+    .populate("chat");
+  res.json(messages);
+});
+
+module.exports = { sendMessage, fetchMessages };
