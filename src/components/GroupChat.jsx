@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -8,13 +8,22 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import { Button, useDisclosure } from "@chakra-ui/react";
+import { Button, useDisclosure, useToast } from "@chakra-ui/react";
 
 const GroupChat = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [groupChatName, setGroupChatName] = useState();
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [search, setSearch] = useState();
+  const [searchResults, setSearchResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const toast = useToast();
+
   return (
     <>
-      <Button onClick={onOpen}>Create Group Chat</Button>
+      <span onClick={onOpen}>{children}</span>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
