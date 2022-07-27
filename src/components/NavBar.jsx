@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Box, Tooltip, Button, Text, chakra } from "@chakra-ui/react";
+import { Box, Tooltip, Button, Text, chakra, useToast } from "@chakra-ui/react";
 import {
   Menu,
   MenuButton,
@@ -11,19 +11,72 @@ import {
   MenuOptionGroup,
   MenuDivider,
 } from "@chakra-ui/react";
+import {
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+} from "@chakra-ui/react";
+import { Input } from "@chakra-ui/react";
+import { useDisclosure } from "@chakra-ui/react";
 import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const NavBar = () => {
+const NavBar = ({ user }) => {
   const [search, setSearch] = useState();
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState(false);
 
+  const toast = useToast();
   const navigate = useNavigate();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = React.useRef();
+
   const logoutHandler = () => {
     localStorage.removeItem("token");
     navigate("/");
+  };
+
+  const searchHandler = async () => {
+    if (!search) {
+      toast({
+        title: "Please Enter something in search",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+
+      const { data } = await axios.get(`/api/users?search=${search}`, config);
+
+      setLoading(false);
+      console.log(data);
+      setSearchResults(data);
+    } catch (error) {
+      toast({
+        title: "Something went wrong",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
+    }
   };
 
   return (
@@ -36,7 +89,7 @@ const NavBar = () => {
         p="5px 10px 5px 10px"
         borderWidth="5px"
       >
-        <Button variant="ghost" bg="blue.200">
+        <Button variant="ghost" bg="blue.200" onClick={onOpen}>
           <i class="fa-solid fa-magnifying-glass"></i>
           <Text px="4">Search User</Text>
         </Button>
@@ -60,6 +113,37 @@ const NavBar = () => {
           </Menu>
         </div>
       </Box>
+
+      <Drawer
+        isOpen={isOpen}
+        placement="left"
+        onClose={onClose}
+        finalFocusRef={btnRef}
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>Search Users</DrawerHeader>
+
+          <DrawerBody>
+            <Box display="flex" pb="2">
+              <Input
+                placeholder="Type here..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <Button onClick={searchHandler}>Go!</Button>
+            </Box>
+          </DrawerBody>
+
+          <DrawerFooter>
+            <Button variant="outline" mr={3} onClick={onClose}>
+              Cancel
+            </Button>
+            <Button colorScheme="blue">Save</Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
     </div>
   );
 };
