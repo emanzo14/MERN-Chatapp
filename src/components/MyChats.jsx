@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { Box, useToast, Button, Stack, Text } from "@chakra-ui/react";
 import axios from "axios";
+import GroupChat from "../components/GroupChat";
 
 const MyChats = ({ user }) => {
   const [loggedInUser, setLoggedInUser] = useState();
@@ -58,9 +59,11 @@ const MyChats = ({ user }) => {
         alignItems="center"
       >
         My Chats
-        <Button d="flex" fontSize={{ base: "17px", md: "10px", lg: "17px" }}>
-          New Group Chat
-        </Button>
+        <GroupChat>
+          <Button d="flex" fontSize={{ base: "17px", md: "10px", lg: "17px" }}>
+            New Group Chat
+          </Button>
+        </GroupChat>
       </Box>
       <Box
         display="flex"
