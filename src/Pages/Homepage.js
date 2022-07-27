@@ -4,7 +4,7 @@ import React from "react";
 import LoginForm from "../components/authentication/LoginForm";
 import SignupForm from "../components/authentication/SignupForm";
 
-const Homepage = () => {
+const Homepage = ({ setUser }) => {
   return (
     <div>
       <Container maxW="xl" centerContent>
@@ -28,10 +28,10 @@ const Homepage = () => {
             </TabList>
             <TabPanels>
               <TabPanel>
-                <LoginForm />
+                <LoginForm setUser={setUser} />
               </TabPanel>
               <TabPanel>
-                <SignupForm />
+                <SignupForm setUser={setUser} />
               </TabPanel>
             </TabPanels>
           </Tabs>
