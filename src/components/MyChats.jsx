@@ -4,10 +4,8 @@ import { Box, useToast, Button, Stack, Text } from "@chakra-ui/react";
 import axios from "axios";
 import GroupChat from "../components/GroupChat";
 
-const MyChats = ({ user }) => {
+const MyChats = ({ user, chats, setChats, selectedChat, setSelectedChat }) => {
   const [loggedInUser, setLoggedInUser] = useState();
-  const [chats, setChats] = useState([]);
-  const [selectedChat, setSelectedChat] = useState();
 
   const toast = useToast();
 

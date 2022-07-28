@@ -9,6 +9,8 @@ import MyChats from "../components/MyChats";
 const Chatpage = () => {
   const [fetchAgain, setFetchAgain] = useState(false);
   const [user, setUser] = useState();
+  const [chats, setChats] = useState([]);
+  const [selectedChat, setSelectedChat] = useState();
 
   const navigate = useNavigate();
 
@@ -29,8 +31,16 @@ const Chatpage = () => {
         h="91.5vh"
         p="10px"
       >
-        {user && <MyChats user={user} />}
-        {user && <Chatbox user={user} />}
+        {user && (
+          <MyChats
+            user={user}
+            selectedChat={selectedChat}
+            setSelectedChat={setSelectedChat}
+            chats={chats}
+            setChats={setChats}
+          />
+        )}
+        {user && <Chatbox user={user} selectedChat={selectedChat} />}
       </Box>
     </div>
   );
