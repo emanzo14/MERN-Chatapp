@@ -59,7 +59,7 @@ const MyChats = ({ user }) => {
         alignItems="center"
       >
         My Chats
-        <GroupChat>
+        <GroupChat user={user} chats={chats} setChats={setChats}>
           <Button d="flex" fontSize={{ base: "17px", md: "10px", lg: "17px" }}>
             New Group Chat
           </Button>
