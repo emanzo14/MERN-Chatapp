@@ -46,7 +46,9 @@ const Chatpage = () => {
           <Chatbox
             user={user}
             selectedChat={selectedChat}
+            setSelectedChat={setSelectedChat}
             fetchAgain={fetchAgain}
+            setFetchAgain={setFetchAgain}
           />
         )}
       </Box>
