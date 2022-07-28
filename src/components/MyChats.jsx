@@ -4,7 +4,14 @@ import { Box, useToast, Button, Stack, Text } from "@chakra-ui/react";
 import axios from "axios";
 import GroupChat from "../components/GroupChat";
 
-const MyChats = ({ user, chats, setChats, selectedChat, setSelectedChat }) => {
+const MyChats = ({
+  user,
+  chats,
+  setChats,
+  selectedChat,
+  setSelectedChat,
+  fetchAgain,
+}) => {
   const [loggedInUser, setLoggedInUser] = useState();
 
   const toast = useToast();
@@ -34,7 +41,7 @@ const MyChats = ({ user, chats, setChats, selectedChat, setSelectedChat }) => {
   useEffect(() => {
     setLoggedInUser(JSON.parse(localStorage.getItem("userInfo")));
     fetchChats();
-  }, []);
+  }, [fetchAgain]);
 
   return (
     <Box

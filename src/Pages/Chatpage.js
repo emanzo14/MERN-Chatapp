@@ -38,9 +38,17 @@ const Chatpage = () => {
             setSelectedChat={setSelectedChat}
             chats={chats}
             setChats={setChats}
+            fetchAgain={fetchAgain}
+            setFetchAgain={setFetchAgain}
           />
         )}
-        {user && <Chatbox user={user} selectedChat={selectedChat} />}
+        {user && (
+          <Chatbox
+            user={user}
+            selectedChat={selectedChat}
+            fetchAgain={fetchAgain}
+          />
+        )}
       </Box>
     </div>
   );
