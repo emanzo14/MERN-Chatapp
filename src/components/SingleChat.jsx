@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import UpdateGroupChat from "./UpdateGroupChat";
 import axios from "axios";
+import Chat from "../components/Chat";
 
 const SingleChat = ({
   fetchAgain,
@@ -23,7 +24,7 @@ const SingleChat = ({
 
   const fetchMessages = async () => {
     if (!selectedChat) return;
-
+    console.log(selectedChat._id);
     try {
       const config = {
         headers: {
@@ -32,7 +33,7 @@ const SingleChat = ({
       };
 
       const { data } = await axios.get(
-        `/api/messages/:${selectedChat._id}`,
+        `/api/messages/${selectedChat._id}`,
         config
       );
       console.log(data);
@@ -123,7 +124,10 @@ const SingleChat = ({
             bg="pink"
             borderRadius="lg"
           >
-            <div>Messages will go here</div>
+            <div>
+              Messages will go here
+              <Chat messages={messages} user={user} />
+            </div>
             <FormControl onKeyDown={sendMessageHandler} isRequired>
               <Input
                 bg="white"
@@ -131,7 +135,6 @@ const SingleChat = ({
                 placeholder="Enter message..."
                 onChange={messageHandler}
               ></Input>
-              {/* <Button onClick={sendMessageHandler}>Send!</Button> */}
             </FormControl>
           </Box>
         </>

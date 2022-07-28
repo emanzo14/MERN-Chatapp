@@ -5,9 +5,9 @@ const User = require("../../models/user");
 const Message = require("../../models/message");
 
 const sendMessage = asyncHandler(async (req, res, next) => {
-  const { chatId, content } = req.body;
+  const { chat, content } = req.body;
   const user = await User.findById(req.user.id);
-  const chat = await Chat.findById(chatId);
+  const chatId = await Chat.findById(chat);
   let newMessage = await Message.create({
     sender: user.id,
     content,
@@ -33,7 +33,8 @@ const sendMessage = asyncHandler(async (req, res, next) => {
 });
 
 const fetchMessages = asyncHandler(async (req, res, next) => {
-  const { chatId } = req.params.chatId;
+  const { chatId } = req.params;
+  // console.log(chatId);
   const messages = await Message.find({ chat: chatId })
     .populate("sender", "name pic email")
     .populate("chat");
