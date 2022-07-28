@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   FormControl,
@@ -21,6 +21,34 @@ const SingleChat = ({
   const [newMessage, setNewMessage] = useState();
   const toast = useToast();
 
+  const fetchMessages = async () => {
+    if (!selectedChat) return;
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+
+      const { data } = await axios.get(
+        `/api/messages/:${selectedChat._id}`,
+        config
+      );
+      console.log(data);
+      setMessages(data);
+    } catch (error) {
+      toast({
+        title: "Error Occured!",
+        description: "Failed to Load the Messages",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+    }
+  };
+
   const sendMessageHandler = async (event) => {
     if (event.key === "Enter" && newMessage) {
       console.log(newMessage);
@@ -36,7 +64,7 @@ const SingleChat = ({
           "/api/messages",
           {
             content: newMessage,
-            chatId: selectedChat._id,
+            chat: selectedChat,
           },
           config
         );
@@ -60,6 +88,10 @@ const SingleChat = ({
   const messageHandler = (e) => {
     setNewMessage(e.target.value);
   };
+
+  useEffect(() => {
+    fetchMessages();
+  }, [selectedChat]);
 
   return (
     <>
