@@ -1,6 +1,14 @@
-import React from "react";
-import { Box, Text } from "@chakra-ui/react";
+import React, { useState } from "react";
+import {
+  Box,
+  FormControl,
+  Input,
+  Text,
+  useToast,
+  Button,
+} from "@chakra-ui/react";
 import UpdateGroupChat from "./UpdateGroupChat";
+import axios from "axios";
 
 const SingleChat = ({
   fetchAgain,
@@ -9,6 +17,50 @@ const SingleChat = ({
   selectedChat,
   setSelectedChat,
 }) => {
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState();
+  const toast = useToast();
+
+  const sendMessageHandler = async (event) => {
+    if (event.key === "Enter" && newMessage) {
+      console.log(newMessage);
+      try {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        };
+        setNewMessage("");
+        const { data } = await axios.post(
+          "/api/messages",
+          {
+            content: newMessage,
+            chatId: selectedChat._id,
+          },
+          config
+        );
+
+        console.log(data);
+
+        setMessages([...messages, data]);
+      } catch (error) {
+        toast({
+          title: "Error Occured!",
+          description: "Failed to send the Message",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+        });
+      }
+    }
+  };
+
+  const messageHandler = (e) => {
+    setNewMessage(e.target.value);
+  };
+
   return (
     <>
       {selectedChat ? (
@@ -39,7 +91,16 @@ const SingleChat = ({
             bg="pink"
             borderRadius="lg"
           >
-            Messages will go here
+            <div>Messages will go here</div>
+            <FormControl onKeyDown={sendMessageHandler} isRequired>
+              <Input
+                bg="white"
+                value={newMessage}
+                placeholder="Enter message..."
+                onChange={messageHandler}
+              ></Input>
+              {/* <Button onClick={sendMessageHandler}>Send!</Button> */}
+            </FormControl>
           </Box>
         </>
       ) : (

@@ -110,8 +110,8 @@ const UpdateGroupChat = ({
       });
       return;
     }
-    console.log(user1._id);
-    console.log(selectedChat._id);
+    // console.log(user1._id);
+    // console.log(selectedChat._id);
     try {
       const config = {
         headers: {
@@ -209,15 +209,6 @@ const UpdateGroupChat = ({
                 onChange={(e) => handleSearch(e.target.value)}
               />
             </FormControl>
-            {/* <Box>
-              {selectedUsers.map((user) => (
-                <UserItem
-                  key={user._id}
-                  user={user}
-                  //   handleFunction={() => handleDelete(user)}
-                />
-              ))}
-            </Box> */}
 
             {searchResults.slice(0, 5).map((user) => (
               <UserListItem
@@ -231,7 +222,7 @@ const UpdateGroupChat = ({
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="red" mr={3}>
+            <Button colorScheme="red" mr={3} onClick={() => handleRemove(user)}>
               Leave Group
             </Button>
           </ModalFooter>
