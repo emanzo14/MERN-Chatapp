@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Box, Tooltip, Button, Text, chakra, useToast } from "@chakra-ui/react";
 import {
@@ -112,6 +112,8 @@ const NavBar = ({ user, setSelectedChat }) => {
       });
     }
   };
+
+  // useEffect(() => {}, [accessChat]);
 
   return (
     <div>
