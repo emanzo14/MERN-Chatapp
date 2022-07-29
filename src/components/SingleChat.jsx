@@ -3,6 +3,10 @@ import { Box, FormControl, Input, Text, useToast } from "@chakra-ui/react";
 import UpdateGroupChat from "./UpdateGroupChat";
 import axios from "axios";
 import Chat from "../components/Chat";
+import io from "socket.io-client";
+
+const ENDPOINT = io.connect("http://localhost:3001");
+let socket;
 
 const SingleChat = ({
   fetchAgain,
@@ -13,6 +17,7 @@ const SingleChat = ({
 }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState();
+  const [socketConnected, setSocketConnected] = useState(false);
   const toast = useToast();
 
   const fetchMessages = async () => {
@@ -31,6 +36,7 @@ const SingleChat = ({
       );
       console.log(data);
       setMessages(data);
+      socket.emit("join chat", selectedChat._id);
     } catch (error) {
       toast({
         title: "Error Occured!",
@@ -78,6 +84,12 @@ const SingleChat = ({
       }
     }
   };
+
+  useEffect(() => {
+    socket = io.connect("http://localhost:3001");
+    socket.emit("setup", user);
+    socket.on("connection", () => setSocketConnected(true));
+  }, []);
 
   const messageHandler = (e) => {
     setNewMessage(e.target.value);
