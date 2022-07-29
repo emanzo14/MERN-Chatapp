@@ -1,16 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
-import { Box, Tooltip, Button, Text, chakra, useToast } from "@chakra-ui/react";
-import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
-} from "@chakra-ui/react";
+import { Box, Button, Text, useToast } from "@chakra-ui/react";
+import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import {
   Drawer,
   DrawerBody,
@@ -81,8 +72,6 @@ const NavBar = ({ user, setSelectedChat }) => {
       });
     }
   };
-
-  const handleFunction = async () => {};
 
   const accessChat = async (userId) => {
     console.log(userId);

@@ -22,7 +22,7 @@ const GroupChat = ({ children, user, chats, setChats }) => {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [search, setSearch] = useState();
   const [searchResults, setSearchResults] = useState([]);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   const toast = useToast();
 
@@ -31,7 +31,7 @@ const GroupChat = ({ children, user, chats, setChats }) => {
     if (!query) {
       return;
     }
-    setLoading(true);
+    // setLoading(true);
 
     const config = {
       headers: {
@@ -39,7 +39,7 @@ const GroupChat = ({ children, user, chats, setChats }) => {
       },
     };
     const { data } = await axios.get(`/api/users?search=${search}`, config);
-    setLoading(false);
+    // setLoading(false);
     // console.log(data);
     setSearchResults(data);
   };

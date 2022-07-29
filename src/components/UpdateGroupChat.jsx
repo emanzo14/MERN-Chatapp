@@ -9,8 +9,8 @@ import {
   ModalCloseButton,
   FormControl,
 } from "@chakra-ui/react";
-import { Button, useDisclosure, useToast, Text, Box } from "@chakra-ui/react";
-import { Input, Toast } from "@chakra-ui/react";
+import { Button, useDisclosure, useToast, Box } from "@chakra-ui/react";
+import { Input } from "@chakra-ui/react";
 import UserItem from "../components/UserItem";
 import axios from "axios";
 import UserListItem from "../components/UserListItem";
@@ -26,7 +26,7 @@ const UpdateGroupChat = ({
   const [groupChatName, setGroupChatName] = useState();
   const [search, setSearch] = useState();
   const [searchResults, setSearchResults] = useState([]);
-  const [selectedUsers, setSelectedUsers] = useState([]);
+  //   const [selectedUsers, setSelectedUsers] = useState([]);
   const toast = useToast();
 
   const handleSearch = async (query) => {

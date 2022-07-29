@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Box,
-  FormControl,
-  Input,
-  Text,
-  useToast,
-  Button,
-} from "@chakra-ui/react";
+import { Box, FormControl, Input, Text, useToast } from "@chakra-ui/react";
 import UpdateGroupChat from "./UpdateGroupChat";
 import axios from "axios";
 import Chat from "../components/Chat";
@@ -91,7 +84,7 @@ const SingleChat = ({
   };
 
   useEffect(() => {
-    fetchMessages();
+    fetchMessages(); // eslint-disable-next-line
   }, [selectedChat]);
 
   return (

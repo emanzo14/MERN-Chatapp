@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler");
 const Chat = require("../../models/chat");
 const User = require("../../models/user");
 
-const createChat = asyncHandler(async (req, res, next) => {
+const createChat = asyncHandler(async (req, res) => {
   const { userId } = req.body;
   console.log(userId);
   // const user = await User.findById(userId);
@@ -47,7 +47,7 @@ const createChat = asyncHandler(async (req, res, next) => {
   }
 });
 
-const fetchChats = asyncHandler(async (req, res, next) => {
+const fetchChats = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user.id);
   const chats = await Chat.find({ users: { $all: [user.id] } })
     .populate("users", "-password")
@@ -64,7 +64,7 @@ const fetchChats = asyncHandler(async (req, res, next) => {
     });
 });
 
-const createGroupChat = asyncHandler(async (req, res, next) => {
+const createGroupChat = asyncHandler(async (req, res) => {
   if (!req.body.users || !req.body.name) {
     return res.status(400).send("Fill all fields");
   }
@@ -92,7 +92,7 @@ const createGroupChat = asyncHandler(async (req, res, next) => {
   }
 });
 
-const renameGroupChat = asyncHandler(async (req, res, next) => {
+const renameGroupChat = asyncHandler(async (req, res) => {
   const { chatId, chatName } = req.body;
   const chat = await Chat.findByIdAndUpdate(chatId, { chatName }, { new: true })
     .populate("users", "-password")
@@ -106,7 +106,7 @@ const renameGroupChat = asyncHandler(async (req, res, next) => {
   }
 });
 
-const addUserToGroupChat = asyncHandler(async (req, res, next) => {
+const addUserToGroupChat = asyncHandler(async (req, res) => {
   const { chatId, userId } = req.body;
   const add = await Chat.findByIdAndUpdate(
     chatId,
@@ -124,7 +124,7 @@ const addUserToGroupChat = asyncHandler(async (req, res, next) => {
   }
 });
 
-const removeUserFromGroupChat = asyncHandler(async (req, res, next) => {
+const removeUserFromGroupChat = asyncHandler(async (req, res) => {
   const { chatId, userId } = req.body;
   const remove = await Chat.findByIdAndUpdate(
     chatId,
