@@ -54,4 +54,14 @@ io.on("connection", (socket) => {
     socket.join(chatRoom);
     console.log(`User joined ${chatRoom}`);
   });
+
+  socket.on("send message", (message) => {
+    let chat = message.chat;
+    if (!chat.users) return console.log("No users in chat");
+
+    chat.users.forEach((user) => {
+      if (user._id == message.sender._id) return;
+      socket.in(user._id).emit("message recieved", message);
+    });
+  });
 });

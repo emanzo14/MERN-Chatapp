@@ -6,7 +6,7 @@ import Chat from "../components/Chat";
 import io from "socket.io-client";
 
 const ENDPOINT = io.connect("http://localhost:3001");
-let socket;
+let socket, selectedChatCompare;
 
 const SingleChat = ({
   fetchAgain,
@@ -49,6 +49,31 @@ const SingleChat = ({
     }
   };
 
+  useEffect(() => {
+    socket = io.connect("http://localhost:3001");
+    socket.emit("setup", user);
+    socket.on("connection", () => setSocketConnected(true));
+  }, []);
+
+  useEffect(() => {
+    fetchMessages();
+
+    selectedChatCompare = selectedChat;
+  }, [selectedChat]);
+
+  useEffect(() => {
+    socket.on("message recieved", (message) => {
+      if (
+        !selectedChatCompare ||
+        selectedChatCompare._id !== message.chat._id
+      ) {
+        //give notification if message is not from selected chat
+      } else {
+        setMessages([...messages, message]);
+      }
+    });
+  });
+
   const sendMessageHandler = async (event) => {
     if (event.key === "Enter" && newMessage) {
       console.log(newMessage);
@@ -70,7 +95,7 @@ const SingleChat = ({
         );
 
         console.log(data);
-
+        socket.emit("send message", data);
         setMessages([...messages, data]);
       } catch (error) {
         toast({
@@ -85,19 +110,9 @@ const SingleChat = ({
     }
   };
 
-  useEffect(() => {
-    socket = io.connect("http://localhost:3001");
-    socket.emit("setup", user);
-    socket.on("connection", () => setSocketConnected(true));
-  }, []);
-
   const messageHandler = (e) => {
     setNewMessage(e.target.value);
   };
-
-  useEffect(() => {
-    fetchMessages(); // eslint-disable-next-line
-  }, [selectedChat]);
 
   return (
     <>
