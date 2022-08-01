@@ -18,7 +18,7 @@ const Homepage = ({ setUser }) => {
           borderRadius="lg"
           borderWidth="1px"
         >
-          <Text fontSize="4xl">MERN Chat</Text>
+          <Text fontSize="4xl">Chatify</Text>
         </Box>
         <Box bg="white" p={4} w="100%" borderRadius="lg" borderWidth="1px">
           <Tabs variant="soft-rounded" colorScheme="green">
