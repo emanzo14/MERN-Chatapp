@@ -121,8 +121,8 @@ const NavBar = ({ user, setSelectedChat, chats, setChats }) => {
           <i className="fa-solid fa-magnifying-glass"></i>
           <Text px="4">Search User</Text>
         </Button>
-        <Text fontFamily="" fontSize="3xl">
-          Chat-App
+        <Text fontFamily="" fontSize="4xl">
+          Chattastic
         </Text>
         <div>
           <Menu>

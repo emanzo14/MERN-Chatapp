@@ -157,6 +157,7 @@ const SingleChat = ({
             </div>
             <FormControl onKeyDown={sendMessageHandler} isRequired>
               <Input
+                borderColor="#A0AEC0"
                 mt={3}
                 bg="white"
                 value={newMessage}

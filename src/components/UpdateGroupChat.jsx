@@ -197,6 +197,8 @@ const UpdateGroupChat = ({
             </Box>
             <FormControl display="flex">
               <Input
+                borderWidth="2px"
+                borderColor="#A0AEC0"
                 mt={4}
                 mb={2}
                 mr={2}
@@ -210,6 +212,8 @@ const UpdateGroupChat = ({
             </FormControl>
             <FormControl>
               <Input
+                borderWidth="2px"
+                borderColor="#A0AEC0"
                 mt={2}
                 placeholder="Search Users..."
                 onChange={(e) => handleSearch(e.target.value)}

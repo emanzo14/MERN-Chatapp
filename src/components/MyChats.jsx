@@ -25,7 +25,7 @@ const MyChats = ({
       };
 
       const { data } = await axios.get("/api/chats", config);
-      console.log(data);
+      // console.log(data);
       setChats(data);
     } catch (error) {
       toast({
@@ -74,7 +74,10 @@ const MyChats = ({
       >
         My Chats
         <GroupChat user={user} chats={chats} setChats={setChats}>
-          <Button d="flex" fontSize={{ base: "17px", md: "10px", lg: "17px" }}>
+          <Button
+            display="flex"
+            fontSize={{ base: "17px", md: "10px", lg: "17px" }}
+          >
             New Group Chat
           </Button>
         </GroupChat>
@@ -99,6 +102,12 @@ const MyChats = ({
               px={3}
               py={2}
               borderRadius="lg"
+              borderWidth="1px"
+              borderColor="#CBD5E0"
+              boxShadow="xl"
+              p="4"
+              rounded="md"
+              bg="white"
               key={chat._id}
             >
               <Text>

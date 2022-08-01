@@ -106,12 +106,17 @@ const GroupChat = ({ children, user, chats, setChats }) => {
           <ModalBody>
             <FormControl>
               <Input
+                borderWidth="2px"
+                borderColor="#A0AEC0"
+                mb={4}
                 placeholder="Chat Name"
                 onChange={(e) => setGroupChatName(e.target.value)}
               />
             </FormControl>
             <FormControl>
               <Input
+                borderWidth="2px"
+                borderColor="#A0AEC0"
                 placeholder="Search Users..."
                 onChange={(e) => handleSearch(e.target.value)}
               />
