@@ -44,8 +44,13 @@ const MyChats = ({
 
   useEffect(() => {
     setLoggedInUser(JSON.parse(localStorage.getItem("userInfo")));
-    fetchChats();
-  }, [fetchAgain]);
+
+    const interval = setInterval(() => {
+      fetchChats();
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <Box
