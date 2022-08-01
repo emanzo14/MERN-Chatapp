@@ -12,7 +12,7 @@ const UserItem = ({ user, handleFunction, admin }) => {
       mb={2}
       variant="solid"
       fontSize={12}
-      colorScheme="purple"
+      colorScheme="green"
       cursor="pointer"
       onClick={handleFunction}
     >

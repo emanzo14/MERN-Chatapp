@@ -195,16 +195,22 @@ const UpdateGroupChat = ({
                 />
               ))}
             </Box>
-            <FormControl>
+            <FormControl display="flex">
               <Input
+                mt={4}
+                mb={2}
+                mr={2}
                 placeholder="Chat Name"
                 value={groupChatName}
                 onChange={(e) => setGroupChatName(e.target.value)}
               />
-              <Button onClick={handleRename}>Update</Button>
+              <Button mt={4} onClick={handleRename}>
+                Update
+              </Button>
             </FormControl>
             <FormControl>
               <Input
+                mt={2}
                 placeholder="Search Users..."
                 onChange={(e) => handleSearch(e.target.value)}
               />

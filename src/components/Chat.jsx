@@ -1,4 +1,5 @@
 import React from "react";
+import { Avatar } from "@chakra-ui/react";
 // import UserItem from "../components/UserItem";
 
 // ******** Chat Logic ********
@@ -50,7 +51,15 @@ const Chat = ({ messages, user }) => {
         messages.map((m, i) => (
           <div style={{ display: "flex" }} key={m._id}>
             {sameSender(messages, m, i, user._id) ||
-              lastMessage(messages, i, user._id)}
+              (lastMessage(messages, i, user._id) && (
+                <Avatar
+                  mt={3}
+                  mr={2}
+                  size="sm"
+                  cursor="pointer"
+                  name={m.sender.name}
+                />
+              ))}
 
             <span
               style={{
@@ -59,6 +68,7 @@ const Chat = ({ messages, user }) => {
                 }`,
                 marginLeft: isSameSenderMargin(messages, m, i, user._id),
                 marginTop: isSameUser(messages, m, i, user._id) ? 3 : 10,
+                display: "flex",
                 borderRadius: "20px",
                 padding: "5px 15px",
                 maxWidth: "75%",

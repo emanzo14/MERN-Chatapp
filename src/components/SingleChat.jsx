@@ -153,11 +153,11 @@ const SingleChat = ({
             borderRadius="lg"
           >
             <div>
-              Messages will go here
               <Chat messages={messages} user={user} />
             </div>
             <FormControl onKeyDown={sendMessageHandler} isRequired>
               <Input
+                mt={3}
                 bg="white"
                 value={newMessage}
                 placeholder="Enter message..."
@@ -167,8 +167,10 @@ const SingleChat = ({
           </Box>
         </>
       ) : (
-        <Box>
-          <Text>Select a chat to start chatting</Text>
+        <Box justifyContent="center">
+          <Text fontSize="3xl" pb={3}>
+            Select a chat to start chatting
+          </Text>
         </Box>
       )}
     </>

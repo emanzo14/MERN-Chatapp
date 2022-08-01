@@ -38,6 +38,10 @@ const MyChats = ({
     }
   };
 
+  const getSender = (loggedUser, users) => {
+    return users[0]._id === loggedUser._id ? users[1].name : users[0].name;
+  };
+
   useEffect(() => {
     setLoggedInUser(JSON.parse(localStorage.getItem("userInfo")));
     fetchChats();
@@ -94,9 +98,17 @@ const MyChats = ({
             >
               <Text>
                 {!chat.isGroupChat
-                  ? chat.users.map((user) => user.name).join(", ")
+                  ? getSender(loggedInUser, chat.users)
                   : chat.chatName}
               </Text>
+              {chat.latestMessage && (
+                <Text fontSize="xs">
+                  <b>{chat.latestMessage.sender.name} : </b>
+                  {chat.latestMessage.content.length > 50
+                    ? chat.latestMessage.content.substring(0, 51) + "..."
+                    : chat.latestMessage.content}
+                </Text>
+              )}
             </Box>
           ))}
         </Stack>
