@@ -6,9 +6,9 @@ Chatify is a is a Full Stack Chatting App. This app provides the user with a use
 
 ## TECH:
 
--React
--Javascript
--HTML
--CSS
--Socket.io
--Heroku
+- React
+- Javascript
+- HTML
+- CSS
+- Socket.io
+- Heroku
