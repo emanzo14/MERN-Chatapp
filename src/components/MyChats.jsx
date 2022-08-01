@@ -49,7 +49,7 @@ const MyChats = ({
       flexDir="column"
       alignItems="center"
       p={3}
-      bg="pink"
+      bg="white"
       w={{ base: "100%", md: "31%" }}
       borderRadius="lg"
       borderWidth="1px"
@@ -76,7 +76,7 @@ const MyChats = ({
         p={3}
         bg="#F8F8F8"
         width="100%"
-        height="95%"
+        height="90%"
         borderRadius="lg"
         overflowY="hidden"
       >

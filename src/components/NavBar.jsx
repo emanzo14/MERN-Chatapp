@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, Button, Text, useToast } from "@chakra-ui/react";
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import {
@@ -18,13 +18,13 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import UserListItem from "./UserListItem";
 
-const NavBar = ({ user, setSelectedChat }) => {
+const NavBar = ({ user, setSelectedChat, chats, setChats }) => {
   const [search, setSearch] = useState();
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState(false);
   //   const [selectedChat, setSelectedChat] = useState();
-  const [chats, setChats] = useState([]);
+  // const [chats, setChats] = useState([]);
 
   const toast = useToast();
   const navigate = useNavigate();
@@ -73,24 +73,24 @@ const NavBar = ({ user, setSelectedChat }) => {
     }
   };
 
-  const accessChat = async (userId) => {
+  const createChat = async (userId) => {
     console.log(userId);
     try {
       setLoadingChat(true);
 
       const config = {
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
         },
       };
 
       const { data } = await axios.post(`/api/chats`, { userId }, config);
 
-      if (!chats.find((c) => c.id === data.id)) setChats([...chats, data]);
-
-      setSelectedChat(data);
+      if (!chats.find((c) => c.id === data._id)) setChats([...chats, data]);
+      console.log(data);
+      // setSelectedChat(data);
       setLoadingChat(false);
-      onClose();
     } catch (error) {
       toast({
         title: "Something went wrong",
@@ -100,9 +100,10 @@ const NavBar = ({ user, setSelectedChat }) => {
         position: "top-left",
       });
     }
+    onClose();
   };
 
-  // useEffect(() => {}, [accessChat]);
+  useEffect(() => {}, [createChat]);
 
   return (
     <div>
@@ -110,9 +111,11 @@ const NavBar = ({ user, setSelectedChat }) => {
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        bg="RGBA(0, 0, 0, 0.16)"
+        bg="white"
         p="5px 10px 5px 10px"
         borderWidth="5px"
+        m="0px 10px 0px 10px"
+        borderRadius="lg"
       >
         <Button variant="ghost" bg="blue.200" onClick={onOpen}>
           <i className="fa-solid fa-magnifying-glass"></i>
@@ -128,8 +131,13 @@ const NavBar = ({ user, setSelectedChat }) => {
             </MenuButton>
             <MenuList></MenuList>
             <Menu>
-              <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-                My Profile
+              <MenuButton
+                p="20px"
+                m="5px"
+                as={Button}
+                rightIcon={<ChevronDownIcon />}
+              >
+                {user.name}
               </MenuButton>
               <MenuList>
                 <MenuItem onClick={logoutHandler}>Logout</MenuItem>
@@ -165,23 +173,18 @@ const NavBar = ({ user, setSelectedChat }) => {
               </Box>
             ) : (
               <Box>
-                {searchResults.map((user) => (
+                {searchResults?.map((user) => (
                   <UserListItem
                     user={user}
                     key={user._id}
-                    handleFunction={() => accessChat(user._id)}
+                    handleFunction={() => createChat(user._id)}
                   />
                 ))}
               </Box>
             )}
           </DrawerBody>
 
-          <DrawerFooter>
-            <Button variant="outline" mr={3} onClick={onClose}>
-              Cancel
-            </Button>
-            <Button colorScheme="blue">Save</Button>
-          </DrawerFooter>
+          <DrawerFooter></DrawerFooter>
         </DrawerContent>
       </Drawer>
     </div>

@@ -12,7 +12,7 @@ const Homepage = ({ setUser }) => {
           d="Flex"
           justifyContent="center"
           p={3}
-          bg={"#81E6D9"}
+          bg="white"
           w="100%"
           m="40px 0 15px 0"
           borderRadius="lg"
@@ -20,7 +20,7 @@ const Homepage = ({ setUser }) => {
         >
           <Text fontSize="4xl">MERN Chat</Text>
         </Box>
-        <Box bg={"#81E6D9"} p={4} w="100%" borderRadius="lg" borderWidth="1px">
+        <Box bg="white" p={4} w="100%" borderRadius="lg" borderWidth="1px">
           <Tabs variant="soft-rounded" colorScheme="green">
             <TabList>
               <Tab>Login</Tab>

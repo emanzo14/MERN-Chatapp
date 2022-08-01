@@ -118,9 +118,17 @@ const SingleChat = ({
     <>
       {selectedChat ? (
         <>
-          <Text display="flex" pb="3" px="2" justifyContent="space-between">
+          <Text
+            display="flex"
+            fontSize={{ base: "28px", md: "30px" }}
+            pb={3}
+            px={2}
+            w="100%"
+            justifyContent={{ base: "space-between" }}
+            alignItems="center"
+          >
             {!selectedChat.isGroupChat ? (
-              <Text>{selectedChat.chatName}</Text>
+              <Text>{selectedChat.chatName.toUpperCase()}</Text>
             ) : (
               <>
                 {selectedChat.chatName}
@@ -141,7 +149,7 @@ const SingleChat = ({
             p={2}
             height="100%"
             width="100%"
-            bg="pink"
+            bg="white"
             borderRadius="lg"
           >
             <div>

@@ -1,5 +1,10 @@
 .App {
   text-align: center;
+  background-image: url(./wp6424616-4k-geometric-wallpapers.png);
+  background-size: cover;
+  background-position: center;
+
+  height: 100vh;
 }
 
 .App-logo {

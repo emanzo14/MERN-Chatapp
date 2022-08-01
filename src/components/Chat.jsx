@@ -1,6 +1,8 @@
 import React from "react";
 // import UserItem from "../components/UserItem";
 
+// ******** Chat Logic ********
+
 const sameSender = (messages, m, i, userId) => {
   return (
     i < messages.length - 1 &&
@@ -18,7 +20,7 @@ const lastMessage = (messages, i, userId) => {
   );
 };
 
-export const isSameSenderMargin = (messages, m, i, userId) => {
+const isSameSenderMargin = (messages, m, i, userId) => {
   // console.log(i === messages.length - 1);
 
   if (
@@ -37,7 +39,7 @@ export const isSameSenderMargin = (messages, m, i, userId) => {
   else return "auto";
 };
 
-export const isSameUser = (messages, m, i) => {
+const isSameUser = (messages, m, i) => {
   return i > 0 && messages[i - 1].sender._id === m.sender._id;
 };
 

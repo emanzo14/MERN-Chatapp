@@ -194,7 +194,7 @@ const SignupForm = () => {
           onChange={(e) => postDetails(e.target.files[0])}
         ></Input>
       </FormControl>
-      <Button onClick={handleSubmit} isLoading={picLoading}>
+      <Button onClick={handleSubmit} isLoading={picLoading} bg="#80ed99">
         Sign Up!
       </Button>
     </VStack>

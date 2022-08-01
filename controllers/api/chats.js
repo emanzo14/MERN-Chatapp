@@ -6,8 +6,8 @@ const User = require("../../models/user");
 const createChat = asyncHandler(async (req, res) => {
   const { userId } = req.body;
   console.log(userId);
-  // const user = await User.findById(userId);
-  // console.log(user.id);
+  const user = await User.findById(userId);
+  console.log(user.name);
   if (!userId) {
     res.status(400);
     throw new Error("user does not exist");
@@ -35,7 +35,7 @@ const createChat = asyncHandler(async (req, res) => {
   });
   if (!isChat) {
     const newChat = await Chat.create({
-      chatName: `${userId.name} & ${sessionUser.name}`,
+      chatName: `${user.name}`,
       users: [userId, sessionUser.id],
       isGroupChat: false,
     });

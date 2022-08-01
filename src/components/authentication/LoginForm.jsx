@@ -105,7 +105,7 @@ const LoginForm = () => {
         </InputGroup>
       </FormControl>
 
-      <Button onClick={submitHandler} isLoading={loading}>
+      <Button onClick={submitHandler} isLoading={loading} bg="#d8f3dc">
         Login!
       </Button>
     </VStack>

@@ -23,7 +23,7 @@ const Chatpage = () => {
 
   return (
     <div style={{ width: "100%" }}>
-      {user && <NavBar user={user} />}
+      {user && <NavBar user={user} chats={chats} setChats={setChats} />}
       <Box
         display="flex"
         justifyContent="space-between"
