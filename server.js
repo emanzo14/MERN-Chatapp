@@ -29,7 +29,7 @@ app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
-const port = 3001;
+const port = 3000;
 
 const server = app.listen(port, function () {
   console.log(`Server.js is running on port ${port}`);

@@ -107,7 +107,7 @@ const MyChats = ({
               boxShadow="xl"
               p="4"
               rounded="md"
-              bg="white"
+              background="white"
               key={chat._id}
             >
               <Text>
