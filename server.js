@@ -29,10 +29,10 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
-const port = 3001;
+const PORT = 3001;
 
-const server = app.listen(port, function () {
-  console.log(`Server.js is running on port ${port}`);
+const server = app.listen(PORT, function () {
+  console.log(`Server.js is running on port ${PORT}`);
 });
 
 const io = require("socket.io")(server, {
