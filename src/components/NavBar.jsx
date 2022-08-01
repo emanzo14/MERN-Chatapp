@@ -122,7 +122,7 @@ const NavBar = ({ user, setSelectedChat, chats, setChats }) => {
           <Text px="4">Search User</Text>
         </Button>
         <Text fontFamily="" fontSize="4xl">
-          Chattastic
+          Chatify
         </Text>
         <div>
           <Menu>
