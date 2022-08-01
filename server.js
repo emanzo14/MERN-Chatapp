@@ -4,7 +4,7 @@ const favicon = require("serve-favicon");
 const userRoutes = require("./routes/api/users");
 const chatRoutes = require("./routes/api/chats");
 const messageRoutes = require("./routes/api/messages");
-const { Server } = require("socket.io");
+
 const cors = require("cors");
 
 require("dotenv").config();
@@ -25,11 +25,11 @@ app.use("/api/users", userRoutes);
 app.use("/api/chats", chatRoutes);
 app.use("/api/messages", messageRoutes);
 
-app.get("/*", (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
-const port = 3000;
+const port = 3001;
 
 const server = app.listen(port, function () {
   console.log(`Server.js is running on port ${port}`);

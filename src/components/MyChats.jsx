@@ -102,12 +102,6 @@ const MyChats = ({
               px={3}
               py={2}
               borderRadius="lg"
-              borderWidth="1px"
-              borderColor="#CBD5E0"
-              boxShadow="xl"
-              p="4"
-              rounded="md"
-              background="white"
               key={chat._id}
             >
               <Text>
