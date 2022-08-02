@@ -16,6 +16,7 @@ https://chatify-1.herokuapp.com/
 - Javascript
 - HTML
 - CSS
+- Chakra UI
 - Socket.io
 - Heroku
 
