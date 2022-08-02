@@ -11,6 +11,8 @@ https://chatify-1.herokuapp.com/
 ## TECH:
 
 - React
+- Node
+- MongoDB
 - Javascript
 - HTML
 - CSS
@@ -21,3 +23,7 @@ https://chatify-1.herokuapp.com/
 
 ![Screenshot 2022-08-01 at 7 34 54 PM](https://user-images.githubusercontent.com/104868823/182262483-363308dd-e1ea-4558-b678-81d357f34aca.png)
 ![Screenshot 2022-08-01 at 7 31 52 PM](https://user-images.githubusercontent.com/104868823/182262487-142dbee7-c59f-494b-a629-e8e594927a90.png)
+
+### Ice Box
+
+- create a notification for new incoming messages
